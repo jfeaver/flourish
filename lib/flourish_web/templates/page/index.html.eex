@@ -3,5 +3,13 @@
 </div>
 
 <div>
-  TODO: Sign in form (no public sign up)
+  <%= form_for @user, user_path(@conn, :create), fn f -> %>
+    <label>
+      Email: <%= text_input f, :email %>
+    </label>
+    <label>
+      Password: <%= text_input f, :password %>
+    </label>
+    <%= submit "Log In" %>
+  <% end %>
 </div>
