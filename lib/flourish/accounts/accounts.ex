@@ -50,9 +50,12 @@ defmodule Flourish.Accounts do
 
   """
   def create_user(%{password: password} = attrs) do
+    %{password_hash: encrypted_password} = Comeonin.Bcrypt.add_hash(password)
+
     attrs = attrs
             |> Map.delete(:password)
-            |> Map.put(:encrypted_password, password)
+            |> Map.put(:encrypted_password, encrypted_password)
+
     %User{}
     |> User.changeset(attrs)
     |> Repo.insert()
@@ -103,5 +106,9 @@ defmodule Flourish.Accounts do
   """
   def change_user(%User{} = user) do
     User.changeset(user, %{})
+  end
+
+  def check_user_password(user = %User{encrypted_password: _encrypted_password}, password) do
+    Comeonin.Bcrypt.check_pass(user, password)
   end
 end

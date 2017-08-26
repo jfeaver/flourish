@@ -17,3 +17,6 @@ config :flourish, Flourish.Repo,
   database: "flourish_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+# decrease the password hashing rounds to speed things up a bit
+config :bcrypt_elixir, :log_rounds, 4

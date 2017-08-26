@@ -8,7 +8,7 @@ defmodule Flourish.AccountsTest do
 
     @valid_attrs %{confirmation_token: "some confirmation_token", confirmed_at: ~N[2010-04-17 14:00:00.000000], email: "some email", password: "password", first_name: "some first_name", last_name: "some last_name", reset_password_token: "some reset_password_token"}
     @update_attrs %{confirmation_token: "some updated confirmation_token", confirmed_at: ~N[2011-05-18 15:01:01.000000], email: "some updated email", encrypted_password: "some updated encrypted_password", first_name: "some updated first_name", last_name: "some updated last_name", reset_password_token: "some updated reset_password_token"}
-    @invalid_attrs %{confirmation_token: nil, confirmed_at: nil, email: nil, password: nil, first_name: nil, last_name: nil, reset_password_token: nil}
+    @invalid_attrs %{confirmation_token: nil, confirmed_at: nil, email: nil, password: "", first_name: nil, last_name: nil, reset_password_token: nil}
 
     def user_fixture(attrs \\ %{}) do
       {:ok, user} =
@@ -79,6 +79,18 @@ defmodule Flourish.AccountsTest do
     test "change_user/1 returns a user changeset" do
       user = user_fixture()
       assert %Ecto.Changeset{} = Accounts.change_user(user)
+    end
+
+    test "check_user_password/2 verifies an encrypted password" do
+      password = "password"
+      user = user_fixture(%{password: password})
+      assert {:ok, ^user} = Accounts.check_user_password(user, password)
+    end
+
+    test "check_user_password/2 reports an incorrect password" do
+      user = user_fixture(%{password: "password"})
+      assert {:error, message} = Accounts.check_user_password(user, "otherPassword")
+      assert "invalid password" = message
     end
   end
 end
