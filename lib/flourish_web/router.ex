@@ -17,5 +17,6 @@ defmodule FlourishWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    resources "/sessions", SessionController, singleton: true, only: [:create, :delete]
   end
 end

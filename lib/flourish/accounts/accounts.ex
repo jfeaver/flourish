@@ -103,4 +103,15 @@ defmodule Flourish.Accounts do
   def change_user(%User{} = user) do
     User.changeset(user, %{})
   end
+
+  def authenticate_with_email_and_password(email, password) do
+    case Repo.one(from u in User, where: u.email == ^email) do
+      %User{} = user ->
+        case Flourish.Authentication.authenticate_password(user, password) do
+          {:ok, user} -> {:ok, user}
+          {:error, _message} -> {:error, :unauthorized}
+        end
+      nil -> {:error, :unauthorized}
+    end
+  end
 end
