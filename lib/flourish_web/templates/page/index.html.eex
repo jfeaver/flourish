@@ -2,5 +2,16 @@
   <h2>Welcome to Flourish</h2>
 </div>
 
-<div>
+<div class="authentication">
+  <%= form_for @conn, "create_session_path", [method: :post, as: :user], fn f -> %>
+    <div class="form-group">
+      <%= label f, :email %>
+      <%= text_input f, :email, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= label f, :password %>
+      <%= password_input f, :password, class: "form-control" %>
+    </div>
+    <%= submit "Login", class: "btn btn-primary" %>
+  <% end %>
 </div>
