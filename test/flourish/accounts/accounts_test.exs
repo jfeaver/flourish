@@ -80,17 +80,5 @@ defmodule Flourish.AccountsTest do
       user = user_fixture()
       assert %Ecto.Changeset{} = Accounts.change_user(user)
     end
-
-    test "check_user_password/2 verifies an encrypted password" do
-      password = "password"
-      user = user_fixture(%{password: password})
-      assert {:ok, ^user} = Accounts.check_user_password(user, password)
-    end
-
-    test "check_user_password/2 reports an incorrect password" do
-      user = user_fixture(%{password: "password"})
-      assert {:error, message} = Accounts.check_user_password(user, "otherPassword")
-      assert "invalid password" = message
-    end
   end
 end
