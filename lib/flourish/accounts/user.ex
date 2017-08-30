@@ -1,12 +1,14 @@
 defmodule Flourish.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Flourish.Accounts.User
+  alias Flourish.Accounts.{User, EmailLogin}
 
 
   schema "users" do
     field :first_name, :string
     field :last_name, :string
+
+    has_one :email_login, EmailLogin
 
     timestamps()
   end
