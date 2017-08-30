@@ -4,7 +4,7 @@ defmodule Flourish.AccountsTest do
   alias Flourish.Accounts
 
   describe "users" do
-    alias Flourish.Accounts.User
+    alias Flourish.Accounts.{User, EmailLogin}
 
     @valid_attrs %{first_name: "Nathan", last_name: "Feaver"}
     @update_attrs %{first_name: "Jonathan", last_name: "Feavre"}
@@ -32,6 +32,13 @@ defmodule Flourish.AccountsTest do
 
     test "create_user/1 with invalid data returns error changeset" do
       assert {:error, %Ecto.Changeset{}} = Accounts.create_user(@invalid_attrs)
+    end
+
+    test "create_login/4 for email creates a new EmailLogin" do
+      user = user_fixture()
+      assert {:ok, %EmailLogin{} = email_login} = Accounts.create_login(user, :email, "nathan@mail.com", "password")
+      assert email_login.email == "nathan@mail.com"
+      assert is_list(email_login.encrypted_password)
     end
 
     # test "update_user/2 with valid data updates the user" do

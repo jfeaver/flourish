@@ -6,7 +6,7 @@ defmodule Flourish.Accounts do
   import Ecto.Query, warn: false
   alias Flourish.Repo
 
-  alias Flourish.Accounts.User
+  alias Flourish.Accounts.{User, EmailLogin}
 
   @doc """
   Creates a user.
@@ -24,6 +24,33 @@ defmodule Flourish.Accounts do
     %User{}
     |> User.changeset(attrs)
     |> Repo.insert()
+  end
+
+  def debug(arg) do
+    IO.inspect(arg)
+    arg
+  end
+
+  def create_login(user = %User{}, :email, email, password) do
+    %EmailLogin{}
+    |> EmailLogin.changeset(%{user_id: user.id, email: email, password: password})
+    |> Ecto.Changeset.change(Comeonin.Bcrypt.add_hash(password, hash_key: :encrypted_password))
+    |> debug
+    |> Repo.insert()
+  end
+
+  def login(:email, email, password) do
+    query = from u in User,
+              join: e in EmailLogin,
+              where: e.user_id == u.id and e.email == ^email
+    case Repo.one(query) do
+      %User{} = user ->
+        case  Comeonin.Bcrypt.check_pass(user, password) do
+          {:ok, user} -> {:ok, user}
+          {:error, _message} -> {:error, :missing_login}
+        end
+      nil -> {:error, :missing_login}
+    end
   end
 
   # @doc """

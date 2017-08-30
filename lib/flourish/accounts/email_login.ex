@@ -7,6 +7,7 @@ defmodule Flourish.Accounts.EmailLogin do
   schema "email_logins" do
     belongs_to :user, User
     field :email, :string
+    field :password, :string, virtual: true
     field :encrypted_password, :string
 
     timestamps()
