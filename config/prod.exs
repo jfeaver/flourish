@@ -61,4 +61,12 @@ config :logger, level: :info
 
 # Finally import the config/prod.secret.exs
 # which should be versioned separately.
-import_config "prod.secret.exs"
+# ... this don't work with `git push heroku` ...
+# import_config "prod.secret.exs"
+
+# Guardian claim-based request authentication
+config :guardian, Guardian,
+  secret_key: %{
+    "k" => System.get_env("JWT_OCT_KEY"),
+    "kty" => "oct"
+  }

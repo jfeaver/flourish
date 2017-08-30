@@ -56,3 +56,10 @@ config :flourish, Flourish.Repo,
   database: "flourish_dev",
   hostname: "localhost",
   pool_size: 10
+
+# Guardian claim-based request authentication
+config :guardian, Guardian,
+  secret_key: %{
+    "k" => "_sxhsZM2e5MQktKy_oaiMRZG8uF1YOaM5OIH6cC5xcoRltL9dMCiacv9hLKhqLeFm9uVAGpRy_EW8R6GgUdcyA",
+    "kty" => "oct"
+  }
