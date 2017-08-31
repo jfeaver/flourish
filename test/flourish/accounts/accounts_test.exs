@@ -10,6 +10,10 @@ defmodule Flourish.AccountsTest do
     # @update_attrs %{first_name: "Jonathan", last_name: "Feavre"}
     @invalid_attrs %{first_name: nil, last_name: nil}
 
+    @email "nathan@mail.com"
+    @password "password"
+    @valid_email_login_attrs %{email: @email, password: @password}
+
     def user_fixture(attrs \\ %{}) do
       {:ok, user} =
         attrs
@@ -17,6 +21,12 @@ defmodule Flourish.AccountsTest do
         |> Accounts.create_user()
 
       user
+    end
+
+    def email_login_fixture(user, attrs \\ %{}) do
+      attrs = attrs
+              |> Enum.into(@valid_email_login_attrs)
+      Accounts.create_login(user, :email, attrs.email, attrs.password)
     end
 
     # test "get_user!/1 returns the user with given id" do
@@ -36,10 +46,45 @@ defmodule Flourish.AccountsTest do
 
     test "create_login/4 for email creates a new EmailLogin" do
       user = user_fixture()
-      password = "password"
-      assert {:ok, %EmailLogin{} = email_login} = Accounts.create_login(user, :email, "nathan@mail.com", password)
-      assert email_login.email == "nathan@mail.com"
-      assert Comeonin.Bcrypt.checkpw(password, email_login.encrypted_password)
+      assert {:ok, %EmailLogin{} = email_login} = Accounts.create_login(user, :email, @email, @password)
+      assert email_login.email == @email
+      assert Comeonin.Bcrypt.checkpw(@password, email_login.encrypted_password)
+    end
+
+    test "login/3 for email returns successfully if the email/password is correct" do
+      user = user_fixture()
+      email_login_fixture(user)
+      {status, authenticated} = Accounts.login(:email, @email, @password)
+      assert status == :ok
+      assert authenticated.id == user.id
+    end
+
+    test "login/3 for email returns an error if the password is incorrect" do
+      user = user_fixture()
+      email_login_fixture(user)
+      {status, reason} = Accounts.login(:email, @email, "otherPassword")
+      assert status == :error
+      assert reason == :missing_login
+    end
+
+    test "login/3 for email returns an error if the email is incorrect" do
+      user = user_fixture()
+      email_login_fixture(user)
+      {status, reason} = Accounts.login(:email, "otherEmail@mail.com", @password)
+      assert status == :error
+      assert reason == :missing_login
+    end
+
+    test "get_user_by/2 email finds a user with an email login" do
+      user = user_fixture()
+      email_login_fixture(user)
+      result = Accounts.get_user_by(:email, @email)
+      assert result.id == user.id
+    end
+
+    test "get_user_by/2 email fails to find a user who doesn't exist" do
+      result = Accounts.get_user_by(:email, @email)
+      assert result == nil
     end
 
     # test "update_user/2 with valid data updates the user" do

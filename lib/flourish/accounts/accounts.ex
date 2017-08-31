@@ -34,17 +34,23 @@ defmodule Flourish.Accounts do
   end
 
   def login(:email, email, password) do
-    query = from u in User,
-              join: e in EmailLogin,
-              where: e.user_id == u.id and e.email == ^email
-    case Repo.one(query) do
-      %User{} = user ->
-        case  Comeonin.Bcrypt.check_pass(user, password) do
-          {:ok, user} -> {:ok, user}
+    authenticated = get_user_by(:email, email)
+                    |> Repo.preload(:email_login)
+    case authenticated do
+      %User{} ->
+        case Comeonin.Bcrypt.check_pass(authenticated.email_login, password) do
+          {:ok, _email_login} -> {:ok, authenticated}
           {:error, _message} -> {:error, :missing_login}
         end
       nil -> {:error, :missing_login}
     end
+  end
+
+  def get_user_by(:email, email) do
+    query = from u in User,
+              join: e in EmailLogin,
+              where: e.user_id == u.id and e.email == ^email
+    Repo.one(query)
   end
 
   # @doc """
