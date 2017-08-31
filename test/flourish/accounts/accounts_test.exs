@@ -7,7 +7,7 @@ defmodule Flourish.AccountsTest do
     alias Flourish.Accounts.{User, EmailLogin}
 
     @valid_attrs %{first_name: "Nathan", last_name: "Feaver"}
-    @update_attrs %{first_name: "Jonathan", last_name: "Feavre"}
+    # @update_attrs %{first_name: "Jonathan", last_name: "Feavre"}
     @invalid_attrs %{first_name: nil, last_name: nil}
 
     def user_fixture(attrs \\ %{}) do

@@ -26,16 +26,10 @@ defmodule Flourish.Accounts do
     |> Repo.insert()
   end
 
-  def debug(arg) do
-    IO.inspect(arg)
-    arg
-  end
-
   def create_login(user = %User{}, :email, email, password) do
+    %{password_hash: encrypted_password} = Comeonin.Bcrypt.add_hash(password)
     %EmailLogin{}
-    |> EmailLogin.changeset(%{user_id: user.id, email: email, password: password})
-    |> Ecto.Changeset.change(Comeonin.Bcrypt.add_hash(password, hash_key: :encrypted_password))
-    |> debug
+    |> EmailLogin.changeset(%{user_id: user.id, email: email, encrypted_password: encrypted_password})
     |> Repo.insert()
   end
 
