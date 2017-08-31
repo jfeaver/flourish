@@ -29,7 +29,7 @@ defmodule Flourish.Accounts do
   def create_login(user = %User{}, :email, email, password) do
     %{password_hash: encrypted_password} = Comeonin.Bcrypt.add_hash(password)
     %EmailLogin{}
-    |> EmailLogin.changeset(%{user_id: user.id, email: email, encrypted_password: encrypted_password})
+    |> EmailLogin.changeset(%{user: user, email: email, encrypted_password: encrypted_password})
     |> Repo.insert()
   end
 

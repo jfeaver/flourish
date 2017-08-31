@@ -3,7 +3,7 @@ defmodule Flourish.Repo.Migrations.CreateEmailLogins do
 
   def change do
     create table(:email_logins) do
-      add :user_id, references(:users)
+      add :user_id, references(:users), null: false
       add :email, :string, null: false
       add :encrypted_password, :string, null: false
 

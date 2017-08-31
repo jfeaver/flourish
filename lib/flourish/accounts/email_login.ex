@@ -16,6 +16,7 @@ defmodule Flourish.Accounts.EmailLogin do
   def changeset(%EmailLogin{} = email_login, attrs) do
     email_login
     |> cast(attrs, [:email, :encrypted_password])
-    |> validate_required([:email, :encrypted_password])
+    |> put_assoc(:user, attrs.user)
+    |> validate_required([:email, :encrypted_password, :user])
   end
 end
