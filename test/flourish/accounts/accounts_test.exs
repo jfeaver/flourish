@@ -36,9 +36,10 @@ defmodule Flourish.AccountsTest do
 
     test "create_login/4 for email creates a new EmailLogin" do
       user = user_fixture()
-      assert {:ok, %EmailLogin{} = email_login} = Accounts.create_login(user, :email, "nathan@mail.com", "password")
+      password = "password"
+      assert {:ok, %EmailLogin{} = email_login} = Accounts.create_login(user, :email, "nathan@mail.com", password)
       assert email_login.email == "nathan@mail.com"
-      assert is_list(email_login.encrypted_password)
+      assert Comeonin.Bcrypt.checkpw(password, email_login.encrypted_password)
     end
 
     # test "update_user/2 with valid data updates the user" do
