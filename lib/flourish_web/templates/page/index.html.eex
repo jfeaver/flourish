@@ -1,5 +1,6 @@
 <div class="jumbotron">
   <h2>Welcome to Flourish</h2>
+  <%= welcome_user_message(@conn) %>
 </div>
 
 <div class="authentication">

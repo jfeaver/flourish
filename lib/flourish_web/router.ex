@@ -9,14 +9,23 @@ defmodule FlourishWeb.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :authenticated do
+    plug Guardian.Plug.EnsureAuthenticated
+    plug Guardian.Plug.LoadResource
+  end
+
+  pipeline :unauthenticated do
+    plug FlourishWeb.Plug.Unauthenticated
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
 
   scope "/", FlourishWeb do
-    pipe_through :browser
+    pipe_through [:browser, :unauthenticated]
 
     get "/", PageController, :index
-    resources "/sessions", SessionController, singleton: true, only: [:create, :delete]
+    resources "/sessions", SessionController, singleton: true, only: [:create]
   end
 end
