@@ -1,33 +1,16 @@
 defmodule Flourish.AccountsTest do
   use Flourish.DataCase
+  import Fixtures.Accounts
 
   alias Flourish.Accounts
 
   describe "users" do
     alias Flourish.Accounts.{User, EmailLogin}
 
-    @valid_attrs %{first_name: "Nathan", last_name: "Feaver"}
-    # @update_attrs %{first_name: "Jonathan", last_name: "Feavre"}
     @invalid_attrs %{first_name: nil, last_name: nil}
 
-    @email "nathan@mail.com"
-    @password "password"
-    @valid_email_login_attrs %{email: @email, password: @password}
-
-    def user_fixture(attrs \\ %{}) do
-      {:ok, user} =
-        attrs
-        |> Enum.into(@valid_attrs)
-        |> Accounts.create_user()
-
-      user
-    end
-
-    def email_login_fixture(user, attrs \\ %{}) do
-      attrs = attrs
-              |> Enum.into(@valid_email_login_attrs)
-      Accounts.create_login(user, :email, attrs.email, attrs.password)
-    end
+    @email email_login_attr(:email)
+    @password email_login_attr(:password)
 
     # test "get_user!/1 returns the user with given id" do
     #   user = user_fixture()
@@ -35,7 +18,7 @@ defmodule Flourish.AccountsTest do
     # end
 
     test "create_user/1 with valid data creates a user" do
-      assert {:ok, %User{} = user} = Accounts.create_user(@valid_attrs)
+      assert {:ok, %User{} = user} = Accounts.create_user(user_attrs)
       assert user.first_name == "Nathan"
       assert user.last_name == "Feaver"
     end
