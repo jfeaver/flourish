@@ -64,8 +64,8 @@ config :logger, level: :info
 # ... this don't work with `git push heroku` ...
 # import_config "prod.secret.exs"
 
-# Guardian claim-based request authentication
-config :guardian, Guardian,
+# Claim-based request authentication
+config :flourish, Flourish.Authentication,
   secret_key: %{
     "k" => System.get_env("JWT_OCT_KEY"),
     "kty" => "oct"

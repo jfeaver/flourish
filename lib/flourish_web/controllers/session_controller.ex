@@ -5,7 +5,7 @@ defmodule FlourishWeb.SessionController do
     case Flourish.Accounts.login(:email, email, password) do
       {:ok, user} ->
         conn
-        |> Guardian.Plug.sign_in(user)
+        |> Flourish.Authentication.Plug.sign_in(user)
         |> put_flash(:info, "Welcome Back!")
         |> redirect(to: "/")
       {:error, :missing_login} ->

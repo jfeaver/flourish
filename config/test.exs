@@ -21,8 +21,8 @@ config :flourish, Flourish.Repo,
 # decrease the password hashing rounds to speed things up a bit
 config :bcrypt_elixir, :log_rounds, 4
 
-# Guardian claim-based request authentication
-config :guardian, Guardian,
+# Claim-based request authentication
+config :flourish, Flourish.Authentication,
   secret_key: %{
     "k" => "_sxhsZM2e5MQktKy_oaiMRZG8uF1YOaM5OIH6cC5xcoRltL9dMCiacv9hLKhqLeFm9uVAGpRy_EW8R6GgUdcyA",
     "kty" => "oct"

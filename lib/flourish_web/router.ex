@@ -10,12 +10,12 @@ defmodule FlourishWeb.Router do
   end
 
   pipeline :authenticated do
-    plug Guardian.Plug.EnsureAuthenticated
-    plug Guardian.Plug.LoadResource
+    # plug Guardian.Plug.EnsureAuthenticated
+    # plug Guardian.Plug.LoadResource
   end
 
   pipeline :unauthenticated do
-    plug FlourishWeb.Plug.Unauthenticated
+    # plug FlourishWeb.Plug.Unauthenticated
   end
 
   pipeline :api do

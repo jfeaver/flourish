@@ -22,15 +22,11 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
-# Guardian claim-based request authentication
-config :guardian, Guardian,
-  allowed_algos: ["HS512"], # optional
-  verify_module: Guardian.JWT,  # optional
+# Claim-based request authentication
+config :flourish, Flourish.Authentication,
   issuer: "Flourish",
-  ttl: { 30, :days },
-  allowed_drift: 2000,
-  verify_issuer: true, # optional
-  serializer: Flourish.GuardianSerializer
+  ttl: { 5, :days },
+  allowed_drift: 2000
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

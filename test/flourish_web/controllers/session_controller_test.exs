@@ -15,13 +15,13 @@ defmodule FlourishWeb.SessionControllerTest do
   describe "create/2" do
     test "logs the user in", context do
       response = post(build_conn(), "/sessions", @email_login_params)
-      assert(Guardian.Plug.current_resource(response).id == context[:user].id)
+      assert(Flourish.Authentication.Plug.current_resource(response).id == context[:user].id)
     end
 
     test "the logged in user persists to a second request", context do
       post(build_conn(), "/sessions", @email_login_params)
       response = get(build_conn(), "/")
-      assert(Guardian.Plug.current_resource(response).id == context[:user].id)
+      assert(Flourish.Authentication.Plug.current_resource(response).id == context[:user].id)
     end
   end
 end
