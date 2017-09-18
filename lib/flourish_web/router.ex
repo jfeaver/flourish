@@ -10,12 +10,9 @@ defmodule FlourishWeb.Router do
   end
 
   pipeline :authenticated do
-    # plug Guardian.Plug.EnsureAuthenticated
-    # plug Guardian.Plug.LoadResource
-  end
-
-  pipeline :unauthenticated do
-    # plug FlourishWeb.Plug.Unauthenticated
+    plug Guardian.Plug.VerifySession
+    plug Guardian.Plug.EnsureAuthenticated
+    plug Guardian.Plug.LoadResource
   end
 
   pipeline :api do
@@ -23,9 +20,9 @@ defmodule FlourishWeb.Router do
   end
 
   scope "/", FlourishWeb do
-    pipe_through [:browser, :unauthenticated]
+    pipe_through [:browser]
 
     get "/", PageController, :index
-    resources "/sessions", SessionController, singleton: true, only: [:create]
+    resources "/sessions", SessionController, only: [:create]
   end
 end
