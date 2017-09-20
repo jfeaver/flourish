@@ -1,0 +1,12 @@
+<h1>Hello!</h1>
+<div>
+  <h2>Guardian Claims and Things</h2>
+  <dl>
+    <dt>Token</dt>
+    <dd><%= Flourish.Authentication.Plug.current_token(@conn) |> IO.inspect %></dd>
+    <dt>Claims</dt>
+    <dd><%= Flourish.Authentication.Plug.current_claims(@conn) |> IO.inspect %></dd>
+    <dt>Resource</dt>
+    <dd><%= Flourish.Authentication.Plug.current_resource(@conn) |> IO.inspect %></dd>
+  </dl>
+</div>

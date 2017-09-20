@@ -1,6 +1,5 @@
 <div class="jumbotron">
   <h2>Welcome to Flourish</h2>
-  <%= welcome_user_message(@conn) %>
 </div>
 
 <div class="authentication">
@@ -15,4 +14,16 @@
     </div>
     <%= submit "Login", class: "btn btn-primary" %>
   <% end %>
+</div>
+
+<div>
+  <h2>Guardian Claims and Things</h2>
+  <dl>
+    <dt>Token</dt>
+    <dd><%= Flourish.Authentication.Plug.current_token(@conn) |> IO.inspect %></dd>
+    <dt>Claims</dt>
+    <dd><%= Flourish.Authentication.Plug.current_claims(@conn) |> IO.inspect %></dd>
+    <dt>Resource</dt>
+    <dd><%= Flourish.Authentication.Plug.current_resource(@conn) |> IO.inspect %></dd>
+  </dl>
 </div>
