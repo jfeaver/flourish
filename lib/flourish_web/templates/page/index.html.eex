@@ -20,10 +20,10 @@
   <h2>Guardian Claims and Things</h2>
   <dl>
     <dt>Token</dt>
-    <dd><%= Flourish.Authentication.Plug.current_token(@conn) |> IO.inspect %></dd>
+    <dd><%= Flourish.Authentication.Plug.current_token(@conn) %></dd>
     <dt>Claims</dt>
-    <dd><%= Flourish.Authentication.Plug.current_claims(@conn) |> IO.inspect %></dd>
+    <dd><%= Flourish.Authentication.Plug.current_claims(@conn) %></dd>
     <dt>Resource</dt>
-    <dd><%= Flourish.Authentication.Plug.current_resource(@conn) |> IO.inspect %></dd>
+    <dd><%= Flourish.Authentication.Plug.current_resource(@conn) %></dd>
   </dl>
 </div>

@@ -8,7 +8,7 @@ defmodule FlourishWeb.SessionControllerTest do
 
   setup do
     user = user_fixture()
-    email_login = email_login_fixture(user)
+    email_login_fixture(user)
     [user: user]
   end
 
@@ -20,7 +20,7 @@ defmodule FlourishWeb.SessionControllerTest do
 
     test "the logged in user persists to a second request", context do
       post(build_conn(), "/sessions", @email_login_params)
-      response = get(build_conn(), "/")
+      response = get(build_conn(), "/welcome")
       assert(Flourish.Authentication.Plug.current_resource(response).id == context[:user].id)
     end
   end

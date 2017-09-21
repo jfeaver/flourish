@@ -18,7 +18,7 @@ defmodule Flourish.AccountsTest do
     # end
 
     test "create_user/1 with valid data creates a user" do
-      assert {:ok, %User{} = user} = Accounts.create_user(user_attrs)
+      assert {:ok, %User{} = user} = Accounts.create_user(user_attrs())
       assert user.first_name == "Nathan"
       assert user.last_name == "Feaver"
     end
