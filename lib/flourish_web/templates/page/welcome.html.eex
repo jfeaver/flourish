@@ -5,8 +5,8 @@
     <dt>Token</dt>
     <dd><%= Flourish.Authentication.Plug.current_token(@conn) %></dd>
     <dt>Claims</dt>
-    <dd><%= Flourish.Authentication.Plug.current_claims(@conn) %></dd>
+    <dd><%= Flourish.Authentication.Plug.current_claims(@conn) |> inspect() %></dd>
     <dt>Resource</dt>
-    <dd><%= Flourish.Authentication.Plug.current_resource(@conn) %></dd>
+    <dd><%= Flourish.Authentication.Plug.current_resource(@conn) |> inspect() %></dd>
   </dl>
 </div>

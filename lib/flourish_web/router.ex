@@ -10,7 +10,7 @@ defmodule FlourishWeb.Router do
   end
 
   pipeline :authenticated do
-    plug Flourish.Authentication.AuthPipeline
+    plug Flourish.Authentication.EnsureAuthenticated
   end
 
   pipeline :api do

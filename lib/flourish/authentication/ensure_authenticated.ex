@@ -1,5 +1,5 @@
-defmodule Flourish.Authentication.AuthPipeline do
-  @claims %{type: "access"}
+defmodule Flourish.Authentication.EnsureAuthenticated do
+  @claims %{typ: "access"}
 
   use Guardian.Plug.Pipeline, otp_app: :flourish,
                               module: Flourish.Authentication,
