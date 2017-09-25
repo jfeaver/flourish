@@ -23,7 +23,7 @@ defmodule FlourishWeb.Router do
     pipe_through [:browser]
 
     get "/", PageController, :index
-    resources "/sessions", SessionController, only: [:create]
+    resources "/sessions", SessionController, only: [:create, :delete], singleton: true
   end
 
   scope "/", FlourishWeb do

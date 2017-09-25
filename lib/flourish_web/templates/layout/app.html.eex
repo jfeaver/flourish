@@ -13,6 +13,11 @@
 
   <body>
     <div class="container">
+      <header>
+        <%= if current_user(@conn) do %>
+          <%= link("Sign out", to: session_path(@conn, :delete), method: :delete) %>
+        <% end %>
+      </header>
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
 
