@@ -7,11 +7,21 @@ defmodule FlourishWeb.SessionController do
         conn
         |> Flourish.Authentication.Plug.sign_in(user)
         |> put_flash(:info, "Welcome Back!")
-        |> redirect(to: page_path(conn, :welcome))
+        |> redirect_home
       {:error, :missing_login} ->
         conn
         |> put_flash(:error, "Unknown login")
-        |> redirect(to: "/")
+        |> redirect_home
     end
+  end
+
+  def delete(conn, _params) do
+    conn
+    |> Flourish.Authentication.Plug.sign_out()
+    |> redirect_home
+  end
+
+  defp redirect_home(conn) do
+    redirect(conn, to: page_path(conn, :index))
   end
 end
