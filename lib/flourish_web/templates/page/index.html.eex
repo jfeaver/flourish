@@ -2,19 +2,27 @@
   <h2>Welcome to Flourish</h2>
 </div>
 
-<div class="authentication">
-  <%= form_for @conn, session_path(@conn, :create), [method: :post, as: :email_login], fn f -> %>
-    <div class="form-group">
-      <%= label f, :email %>
-      <%= text_input f, :email, class: "form-control" %>
-    </div>
-    <div class="form-group">
-      <%= label f, :password %>
-      <%= password_input f, :password, class: "form-control" %>
-    </div>
-    <%= submit "Login", class: "btn btn-primary" %>
-  <% end %>
-</div>
+<%= if !current_user(@conn) do %>
+  <div class="authentication">
+    <%= form_for @conn, session_path(@conn, :create), [method: :post, as: :email_login], fn f -> %>
+      <div class="form-group">
+        <%= label f, :email %>
+        <%= text_input f, :email, class: "form-control" %>
+        <small class="text-muted">
+          nathan@mail.com
+        </small>
+      </div>
+      <div class="form-group">
+        <%= label f, :password %>
+        <%= password_input f, :password, class: "form-control" %>
+        <small class="text-muted">
+          password
+        </small>
+      </div>
+      <%= submit "Login", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+<% end %>
 
 <%= if current_user(@conn) do %>
   <div>
