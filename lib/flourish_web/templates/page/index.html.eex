@@ -16,14 +16,16 @@
   <% end %>
 </div>
 
-<div>
-  <h2>Guardian Claims and Things</h2>
-  <dl>
-    <dt>Token</dt>
-    <dd><%= Flourish.Authentication.Plug.current_token(@conn) %></dd>
-    <dt>Claims</dt>
-    <dd><%= Flourish.Authentication.Plug.current_claims(@conn) |> inspect() %></dd>
-    <dt>Resource</dt>
-    <dd><%= Flourish.Authentication.Plug.current_resource(@conn) |> inspect() %></dd>
-  </dl>
-</div>
+<%= if current_user(@conn) do %>
+  <div>
+    <h2>Guardian Claims and Things</h2>
+    <dl>
+      <dt>Token</dt>
+      <dd><%= Flourish.Authentication.Plug.current_token(@conn) %></dd>
+      <dt>Claims</dt>
+      <dd><%= Flourish.Authentication.Plug.current_claims(@conn) |> inspect() %></dd>
+      <dt>Resource</dt>
+      <dd><%= Flourish.Authentication.Plug.current_resource(@conn) |> inspect() %></dd>
+    </dl>
+  </div>
+<% end %>

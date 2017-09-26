@@ -38,6 +38,7 @@ defmodule FlourishWeb do
       use Phoenix.HTML
 
       import FlourishWeb.Router.Helpers
+      import FlourishWeb.ApplicationHelpers
       import FlourishWeb.ErrorHelpers
       import FlourishWeb.Gettext
     end
