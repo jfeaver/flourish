@@ -12,7 +12,7 @@ defmodule FlourishWeb.PageControllerTest do
     setup [:create_user, :log_in_user]
 
     test "it allows a user to log out", %{conn: conn} do
-      assert(root_html(conn) =~ "Log out")
+      assert(root_html(conn) =~ "Sign out")
     end
   end
 
@@ -27,7 +27,6 @@ defmodule FlourishWeb.PageControllerTest do
   end
 
   defp log_in_user(context) do
-    Flourish.Authentication.Plug.sign_in(context.conn, context.user)
-    context
+    Map.put(context, :conn, Flourish.Authentication.Plug.sign_in(context.conn, context.user))
   end
 end
