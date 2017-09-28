@@ -28,7 +28,5 @@ defmodule FlourishWeb.Router do
 
   scope "/", FlourishWeb do
     pipe_through [:browser, :authenticated]
-
-    get "/welcome", PageController, :welcome
   end
 end

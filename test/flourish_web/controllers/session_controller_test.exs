@@ -26,7 +26,7 @@ defmodule FlourishWeb.SessionControllerTest do
       response =
         conn
           |> post("/sessions", @email_login_params)
-          |> get("/welcome")
+          |> get("/")
       assert(Flourish.Authentication.Plug.current_resource(response).id == user.id)
     end
   end

@@ -21,6 +21,7 @@ defmodule FlourishWeb do
     quote do
       use Phoenix.Controller, namespace: FlourishWeb
       import Plug.Conn
+      import FlourishWeb.ApplicationHelpers
       import FlourishWeb.Router.Helpers
       import FlourishWeb.Gettext
     end
@@ -37,8 +38,8 @@ defmodule FlourishWeb do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
-      import FlourishWeb.Router.Helpers
       import FlourishWeb.ApplicationHelpers
+      import FlourishWeb.Router.Helpers
       import FlourishWeb.ErrorHelpers
       import FlourishWeb.Gettext
     end

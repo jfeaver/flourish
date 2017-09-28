@@ -2,10 +2,10 @@ defmodule FlourishWeb.PageController do
   use FlourishWeb, :controller
 
   def index(conn, _params) do
-    render conn, "index.html"
-  end
-
-  def welcome(conn, _params) do
-    render conn, "welcome.html"
+    if current_user(conn) do
+      render conn, "welcome.html"
+    else
+      render conn, "index.html"
+    end
   end
 end

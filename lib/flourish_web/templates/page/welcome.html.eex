@@ -1,4 +1,7 @@
-<h1>Hello!</h1>
+<div class="jumbotron">
+  <h2>Welcome to Flourish</h2>
+</div>
+
 <div>
   <h2>Guardian Claims and Things</h2>
   <dl>
