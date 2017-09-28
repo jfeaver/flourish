@@ -29,14 +29,15 @@ defmodule Flourish.Accounts do
   def create_login(user = %User{}, :email, email, password) do
     %{password_hash: encrypted_password} = Comeonin.Bcrypt.add_hash(password)
     %EmailLogin{}
-    |> EmailLogin.changeset(%{user: user, email: email, encrypted_password: encrypted_password})
+    |> EmailLogin.changeset(%{user: user, email: String.downcase(email), encrypted_password: encrypted_password})
     |> Repo.insert()
   end
 
   def login(:email, email, password) do
-    authenticated = get_user_by(:email, email)
-                    |> Repo.preload(:email_login)
-    case authenticated do
+    user =
+      get_user_by(:email, email))
+      |> Repo.preload(:email_login)
+    case user do
       %User{} ->
         case Comeonin.Bcrypt.check_pass(authenticated.email_login, password) do
           {:ok, _email_login} -> {:ok, authenticated}
@@ -47,6 +48,7 @@ defmodule Flourish.Accounts do
   end
 
   def get_user_by(:email, email) do
+    email = String.downcase(email)
     query = from u in User,
               join: e in EmailLogin,
               where: e.user_id == u.id and e.email == ^email
