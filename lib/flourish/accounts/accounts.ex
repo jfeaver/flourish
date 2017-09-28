@@ -35,12 +35,12 @@ defmodule Flourish.Accounts do
 
   def login(:email, email, password) do
     user =
-      get_user_by(:email, email))
+      get_user_by(:email, email)
       |> Repo.preload(:email_login)
     case user do
       %User{} ->
-        case Comeonin.Bcrypt.check_pass(authenticated.email_login, password) do
-          {:ok, _email_login} -> {:ok, authenticated}
+        case Comeonin.Bcrypt.check_pass(user.email_login, password) do
+          {:ok, _email_login} -> {:ok, user}
           {:error, _message} -> {:error, :missing_login}
         end
       nil -> {:error, :missing_login}
