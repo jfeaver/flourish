@@ -11,6 +11,8 @@
 //
 // If you no longer want to use a dependency, remember
 // to also remove its path from "config.paths.watched".
+import "cloudinary-jquery-file-upload"
+import "jquery"
 import "phoenix_html"
 
 // Import local files
