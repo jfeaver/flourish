@@ -8,11 +8,11 @@ defmodule FlourishWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
 
-    plug Flourish.Authentication.LoadResource
+    plug FlourishWeb.Pipeline.LoadAuthenticated
   end
 
   pipeline :authenticated do
-    plug Flourish.Authentication.EnsureAuthenticated
+    plug FlourishWeb.Pipeline.EnsureAuthenticated
   end
 
   pipeline :api do

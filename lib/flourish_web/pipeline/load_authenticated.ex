@@ -1,9 +1,9 @@
-defmodule Flourish.Authentication.LoadResource do
+defmodule FlourishWeb.Pipeline.LoadAuthenticated do
   @claims %{typ: "access"}
 
   use Guardian.Plug.Pipeline, otp_app: :flourish,
                               module: Flourish.Authentication,
-                              error_handler: Flourish.Authentication.AuthErrorHandler
+                              error_handler: FlourishWeb.AuthErrorHandler
 
   plug Guardian.Plug.VerifySession, claims: @claims
   plug Guardian.Plug.VerifyHeader, claims: @claims, realm: "Bearer"
